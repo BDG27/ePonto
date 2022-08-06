@@ -18,9 +18,12 @@ export class Schedule {
   @Column()
   type: number;
 
+  @Column()
+  userId: number;
+
   @ManyToOne(() => User)
-  @JoinColumn()
-  User: User;
+  @JoinColumn({ name: 'userId', referencedColumnName: 'id' })
+  user: User;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

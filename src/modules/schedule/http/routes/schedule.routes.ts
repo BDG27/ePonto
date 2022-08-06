@@ -1,11 +1,12 @@
 import { Router } from 'express';
+import userAuth from '../../../../shared/http/middlewares/userAuth';
 import { ScheduleController } from '../controller/ScheduleController';
 
 const scheduleRoutes = Router();
 
 const scheduleController = new ScheduleController();
 
-scheduleRoutes.post('/', scheduleController.create);
-scheduleRoutes.get('/', scheduleController.list);
+scheduleRoutes.post('/', userAuth, scheduleController.create);
+scheduleRoutes.get('/', userAuth, scheduleController.list);
 
 export { scheduleRoutes };

@@ -1,11 +1,13 @@
 import { celebrate, Segments } from 'celebrate';
 import { Router } from 'express';
 import createUserSchema from '../../schemas/createUser.schema';
+import { AuthController } from '../controller/AuthController';
 import { UserController } from '../controller/UserController';
 
 const userRoutes = Router();
 
 const userController = new UserController();
+const authController = new AuthController();
 
 userRoutes.post(
   '/',
@@ -13,5 +15,6 @@ userRoutes.post(
   userController.create
 );
 userRoutes.get('/', userController.list);
+userRoutes.post('/login', authController.login);
 
 export { userRoutes };

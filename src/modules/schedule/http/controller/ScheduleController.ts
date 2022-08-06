@@ -5,9 +5,9 @@ export class ScheduleController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { type } = req.body;
-      const { userId } = req;
+      const { user } = req;
 
-      const obj = { type, userId };
+      const obj = { type, user };
 
       res.json(await ScheduleRepository.save(obj));
     } catch (err) {

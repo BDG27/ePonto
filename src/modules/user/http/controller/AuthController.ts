@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { AppError } from '../../../../shared/errors/AppError';
+import { User } from '../../typeorm/entities/User';
 import { UserRepositories } from '../../typeorm/repositories/UserRepositories';
 
 export class AuthController {
@@ -9,7 +10,9 @@ export class AuthController {
     try {
       const { email, password } = req.body;
 
-      const user = await UserRepositories.findOne(email);
+      const user = await UserRepositories.findOneBy({
+        email
+      });
 
       if (!user) {
         throw new AppError('Usuário e/ou senha incorretos', 401);
@@ -24,11 +27,13 @@ export class AuthController {
         throw new AppError('Usuário e/ou senha incorretos', 401);
       }
 
+      const partialUser: Partial<User> = user;
+
+      delete partialUser.password;
+
       const token = jwt.sign(
         {
-          id: user.id,
-          email: user.email,
-          name: user.name
+          partialUser
         },
         process.env.JWT_SECRET_KEY as string,
         {
@@ -36,7 +41,7 @@ export class AuthController {
         }
       );
 
-      res.json({ user, token });
+      res.json({ partialUser, token });
     } catch (err) {
       next(err);
     }
