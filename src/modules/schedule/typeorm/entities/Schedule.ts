@@ -22,6 +22,10 @@ export class Schedule {
   @Column()
   password: string;
 
+  @ManyToOne(() => User)
+  @JoinColumn()
+  User: User;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
@@ -30,8 +34,4 @@ export class Schedule {
 
   @DeleteDateColumn({ name: 'deletedAt' })
   deletedAt: Date;
-
-  @ManyToOne(() => User)
-  @JoinColumn()
-  User: User;
 }

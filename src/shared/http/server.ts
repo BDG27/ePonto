@@ -3,7 +3,6 @@ import { app } from './app';
 
 AppDataSource.initialize()
   .then(() => {
-    console.log();
     console.log('Database has connected with successfully...');
 
     app.listen(process.env.HTTP_PORT || 80, () => {
