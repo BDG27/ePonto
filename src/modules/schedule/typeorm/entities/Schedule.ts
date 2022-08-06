@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
+  Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -9,6 +10,7 @@ import {
 } from 'typeorm';
 import { User } from '../../../user/typeorm/entities/User';
 
+@Entity('schedules')
 export class Schedule {
   @PrimaryGeneratedColumn()
   id: number;
