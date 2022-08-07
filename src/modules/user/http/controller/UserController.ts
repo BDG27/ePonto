@@ -39,11 +39,18 @@ export class UserController {
     }
   }
 
-  // async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
-  //   try {
+  async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const { id } = req.params;
 
-  //   } catch (err) {
-  //     next(err);
-  //   }
-  // }
+      // eslint-disable-next-line no-restricted-globals
+      if (isNaN(+id)) {
+        throw new AppError('Informe um ID válido', 400);
+      }
+
+      res.json(await UserRepositories.softDelete(id));
+    } catch (err) {
+      next(err);
+    }
+  }
 }

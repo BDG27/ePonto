@@ -13,5 +13,6 @@ userRoutes.post(
   userController.create
 );
 userRoutes.get('/', userController.list);
+userRoutes.delete('/:id', userController.delete);
 
 export { userRoutes };
