@@ -22,4 +22,20 @@ export class ScheduleController {
       next(err);
     }
   }
+
+  async listByUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { user } = req;
+
+      res.json(
+        await ScheduleRepository.find({ where: { user: { id: user.id } } })
+      );
+    } catch (err) {
+      next(err);
+    }
+  }
 }
